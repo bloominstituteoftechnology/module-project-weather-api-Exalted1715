@@ -57,17 +57,38 @@ async function moduleProject4() {
         let minMax = card.children[2]
         let precipit = card.children[3]
 
-        weekDay.textContent = day.date
+        weekDay.textContent = getDayOfWeek(dateString)
         apparent.textContent = descriptions.find(d => d[0] === day.weather_description)[1]
         minMax.textContent = `${day.temperature_min}°/${day.temperatur_max}°`
         precipit.textContent = `Precipitation: ${data.current.precipitation_probability * 100}%`
       })
 
+      document.querySelector('#location').firstElementChild.textContent = data.location.city
+
     } catch (err) {
       console.log('Promise rejected with an err.message -->', err.message)
     }
   })
-
+  function getDayOfWeek(dateString) {
+   
+    const parts = dateString.split('/');
+    const year = 2000 + parseInt(parts[2]); 
+    const month = parseInt(parts[0]) - 1;   
+    const day = parseInt(parts[1]);
+  
+    // Create a Date object
+    const date = new Date(year, month, day);
+  
+    // Define an array of days of the week
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  
+    // Get the day of the week (0-6) and return the corresponding day name
+    const dayIndex = date.getDay();
+    const dayName = daysOfWeek[dayIndex];
+  
+    return dayName;
+  }
+ }
   // 👆 WORK WORK ABOVE THIS LINE 👆
 
 }
